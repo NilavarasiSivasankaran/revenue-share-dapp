@@ -1,0 +1,25 @@
+{
+  "name": "revenue-share-dapp",
+  "version": "1.0.0",
+  "description": "DApp to intract with Revenue Share Contract hosted over network.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaviyarasu7/revenue-share-dapp.git"
+  },
+  "author": "Kavi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kaviyarasu7/revenue-share-dapp/issues"
+  },
+  "homepage": "https://github.com/kaviyarasu7/revenue-share-dapp#readme",
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "express": "^4.15.3",
+    "solc": "^0.4.11",
+    "web3": "^0.19.0"
+  }
+}
