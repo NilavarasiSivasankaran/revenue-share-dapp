@@ -10,9 +10,9 @@ var provider = new HDWalletProvider(mnemonic, "https://ropsten.infura.io/g3C599I
 
 web3.setProvider(provider);
 
-var FILENAME      = '../contracts/revenue-share.sol';
-var CONTRACT_NAME = 'revenue-share';
-var ABI_FILENAME  = '../abi/revenue-share.js';
+var FILENAME      = '../contracts/RevenueShareContract.sol';
+var CONTRACT_NAME = 'RevenueShareContract';
+var ABI_FILENAME  = '../abi/RevenueShareContract.js';
 
 function getTransactionReceipt(hash) {
     var getReceipt = Promise.promisify(web3.eth.getTransactionReceipt);
