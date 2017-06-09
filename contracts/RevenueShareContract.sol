@@ -2,8 +2,8 @@ pragma solidity ^0.4.8;
 
 contract RevenueShareContract {
     
-    address vendor1 = 0xe2f33D28F36b73258be077eD05Fb9f99b8545E5b; 
-    address vendor2 = 0xd9f9CA6c2Eae6Cb2383512bF3031130FE72De491; 
+    address vendor1 ;//= 0xA774D5eE6294ab782c1d099F5D5ed7666B3E1767; 
+    address vendor2 ;//= 0xEb3d454BC0d25A5f7955C2FFe1cD398A2cD159eF; 
     
     function RevenueShareContract() {
     
@@ -15,7 +15,9 @@ contract RevenueShareContract {
             
     }
     
-    function splitRevenue() payable {
+    function splitRevenue(address _vendor1,address _vendor2) payable {
+        _vendor1=vendor1;
+        _vendor2=vendor2;
         uint256 revinflow;
         revinflow = this.balance;
         vendor1.transfer(3*revinflow/5); // 60% to vendor1

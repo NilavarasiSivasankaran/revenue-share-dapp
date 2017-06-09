@@ -5,7 +5,7 @@ var RevenueShareContract = require('./abi/RevenueShareContract.js');
 
 var web3 = new Web3();
 
-var mnemonic = 'mandate height brown toilet ribbon abandon rib payment kingdom audit tongue margin';
+var mnemonic = 'yellow coach begin suggest govern credit primary anxiety tuition churn cherry oval';
 var provider = new HDWalletProvider(mnemonic, "https://ropsten.infura.io/g3C599IuuA5AvDKXouGd");
 
 web3.setProvider(provider);
@@ -19,8 +19,8 @@ var splitRevenue = Promise.promisify(RevenueShareContractObj.splitRevenue);
 revToContract({from: provider.address,value:web3.toWei(1, "ether") }).then((hash) => getTxReceipt(hash))
 
 splitRevenue({from:provider.address}).then((hash)=>getTxReceipt(hash));
-
-
+var vendor1="0xA774D5eE6294ab782c1d099F5D5ed7666B3E1767";
+var vendor2="0xEb3d454BC0d25A5f7955C2FFe1cD398A2cD159eF";
 function getTxReceipt(hash) {
     var getReceipt = Promise.promisify(web3.eth.getTransactionReceipt);
     return new Promise(function (resolve, reject) {
@@ -42,6 +42,6 @@ function getTxReceipt(hash) {
 }
 
 revToContract().then(()=>{
-	splitRevenue();	
+	splitRevenue("vendor1,vendor2");	
 })
 

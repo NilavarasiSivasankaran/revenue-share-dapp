@@ -1,3 +1,3 @@
-var abi = '[{"constant":false,"inputs":[],"name":"splitRevenue","outputs":[],"payable":true,"type":"function"},{"constant":false,"inputs":[],"name":"revToContract","outputs":[],"payable":true,"type":"function"},{"inputs":[],"payable":false,"type":"constructor"}]';
-var address = '0x7c37727da53968955f8cb0add5694aa996dee002';
+var abi = '[{"constant":false,"inputs":[{"name":"_vendor1","type":"address"},{"name":"_vendor2","type":"address"}],"name":"splitRevenue","outputs":[],"payable":true,"type":"function"},{"constant":false,"inputs":[],"name":"revToContract","outputs":[],"payable":true,"type":"function"},{"inputs":[],"payable":false,"type":"constructor"}]';
+var address = '0x5e9b54fa113d59f45397efa10343154b7424dba0';
 module.exports = {abi: abi, address: address};
