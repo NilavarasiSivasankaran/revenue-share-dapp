@@ -2,25 +2,26 @@ var Web3 = require('web3');
 var Promise = require('bluebird');
 var HDWalletProvider = require("truffle-hdwallet-provider");
 var RevenueShareContract = require('./abi/RevenueShareContract.js');
-
+const express = require('express')
+var intract = express.Router();
 var web3 = new Web3();
 
 var mnemonic = 'yellow coach begin suggest govern credit primary anxiety tuition churn cherry oval';
 var provider = new HDWalletProvider(mnemonic, "https://ropsten.infura.io/g3C599IuuA5AvDKXouGd");
 
 web3.setProvider(provider);
-
+   
 let abi = JSON.parse(RevenueShareContract.abi);
 let RevenueShareContractObj = web3.eth.contract(abi).at(RevenueShareContract.address);
 
 var revToContract = Promise.promisify(RevenueShareContractObj.revToContract);
 var splitRevenue = Promise.promisify(RevenueShareContractObj.splitRevenue);
 
-revToContract({from: provider.address,value:web3.toWei(1, "ether") }).then((hash) => getTxReceipt(hash))
+//revToContract({from: provider.address,value:web3.toWei(1, "ether") }).then((hash) => getTxReceipt(hash))
 
-splitRevenue({from:provider.address}).then((hash)=>getTxReceipt(hash));
-var vendor1="0xA774D5eE6294ab782c1d099F5D5ed7666B3E1767";
-var vendor2="0xEb3d454BC0d25A5f7955C2FFe1cD398A2cD159eF";
+//splitRevenue({from:provider.address}).then((hash)=>getTxReceipt(hash));
+//var vendor1="0xA774D5eE6294ab782c1d099F5D5ed7666B3E1767";
+//var vendor2="0xEb3d454BC0d25A5f7955C2FFe1cD398A2cD159eF";
 function getTxReceipt(hash) {
     var getReceipt = Promise.promisify(web3.eth.getTransactionReceipt);
     return new Promise(function (resolve, reject) {
@@ -41,7 +42,31 @@ function getTxReceipt(hash) {
     });
 }
 
-revToContract().then(()=>{
-	splitRevenue("vendor1,vendor2");	
-})
+// revToContract().then(()=>{
+// 	splitRevenue("vendor1,vendor2");	
+// })
 
+
+function revToContract1(vendor1,vendor2){
+    //console.log(1);
+    return revToContract({from: provider.address,value:web3.toWei(1, "ether") })
+        .then((hash) => getTxReceipt(hash))
+        .then(()=>{
+            //var vendor1="0xA774D5eE6294ab782c1d099F5D5ed7666B3E1767";
+            //var vendor2="0xEb3d454BC0d25A5f7955C2FFe1cD398A2cD159eF";
+            console.log("Success")
+            //return "hello"
+            return splitRevenue(vendor1,vendor2,{from:provider.address})
+        })
+        .then((hash)=>getTxReceipt(hash))
+        .then(()=>{
+                console.log("Split")
+                return true
+        }).catch((err)=>{
+            console.log(err);
+            return false
+        })
+
+
+}
+module.exports = revToContract1;

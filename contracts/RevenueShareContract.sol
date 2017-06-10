@@ -16,8 +16,8 @@ contract RevenueShareContract {
     }
     
     function splitRevenue(address _vendor1,address _vendor2) payable {
-        _vendor1=vendor1;
-        _vendor2=vendor2;
+        vendor1=_vendor1;
+        vendor2=_vendor2;
         uint256 revinflow;
         revinflow = this.balance;
         vendor1.transfer(3*revinflow/5); // 60% to vendor1
