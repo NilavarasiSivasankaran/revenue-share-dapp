@@ -1,40 +1,104 @@
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" dir="ltr">
- 
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
- 
-  <meta http-equiv="X-UA-Compatible" content="chrome=1">
-  <meta name="google" value="notranslate">
- 
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
- 
- 
- 
-  <title>My App</title>
-</head>
-<body>
-</BR></br></BR>
-<center>
-<label> Vendor1 Address </label>
-<input type="text" name="vendor1" id="vendor1"/></br>
-<label> Vendor2 Address </label>
-<input type="text" name="Vendor2" id="vendor2"/></br></br>
-<button id="button"> Submit </button>
-</center>
+  <title>Revenue Share Contract</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+ <style>
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
 
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+</style>
+  </head>
+<body>
+<div class="jumbotron text-center">
+  <h1>Ethereum Transaction</h1>
+  <p>Welcome User</p> 
+</div>
+  
+<div class="container">
+  <div class="row">
+    <div class="col-sm-4">
+      <pre>
+      <strong>Instructions to be followed</strong>
+      
+      <ul>Enter Vendor1 Address</ul>
+      <ul>Enter Vendor2 Address</ul>
+      <ul>Enter Client Mnemonic</ul>
+      <ul>Submit your response</ul>
+      <ul>Wait for the transaction to be mined</ul>
+     
+      </pre>
+    </div>
+    <div class="col-sm-8">
+      <div id="div1">
+        <center>
+        <label class="control-label"> Vendor1 Address </label>
+        <input type="text" name="vendor1" id="vendor1" class="form-control"/></br>
+        <label class="control-label"> Vendor2 Address </label>
+        <input type="text" name="Vendor2" id="vendor2" class="form-control"/></br></br>
+        <label class="control-label"> Client Mnemonic </label>
+        <input type="text" name="mnemonic" id="mnemonic" class="form-control"/></br></br>
+        <button id="button" class="btn btn-primary btn-lg" > Submit </button>
+        </center>
+      </div>
+
+      <div id="wait">
+        <center>
+          <div class="loader" id="loading"></div>
+        </center>
+        <h1>Waiting for the tranaction to be mined..!</h1>
+      </div>
+
+      <div id="result">
+        <h1> Your Trancaction has been successfully Completed...!</h1>
+      </div> 
+    </div>
+  </div>
+</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
+
 $(document).ready(function(){
-    $("#button").click(function(){
-    	 var _vendor1=document.getElementById("vendor1").value;
+    $("#result").hide();
+    $("#wait").hide();
+    
+      $("#button").click(function(){
+        $("#div1").hide();
+        $("#wait").show();;
+  
+        var _vendor1=document.getElementById("vendor1").value;
         var _vendor2=document.getElementById("vendor2").value;
-        console.log(_vendor1);
-        $.get("http://139.59.5.117:3000/revTransfer/"+_vendor1+'/'+_vendor2, function(data, status){
-            alert("Data: " + data + "\nStatus: " + status);
-        });
+        var _mnemonic=document.getElementById("mnemonic").value;
+
+        $.get("http://139.59.5.117:3000/revTransfer/"+_vendor1+'/'+_vendor2+'/'+_mnemonic, function(data, status){
+            $("#result").show();
+            $("#wait").hide();
+          });
+           
     });
-});
+  
+  });
+
 </script>
 </body>
 </html>

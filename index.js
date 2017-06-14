@@ -1,6 +1,6 @@
 const express = require('express')
 const router = require('./router')
-const intract = require ('./intract')
+const interact = require ('./interact')
 const app = express()
 
 app.use("/",router);

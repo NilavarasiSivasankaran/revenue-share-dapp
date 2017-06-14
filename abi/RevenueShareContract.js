@@ -1,3 +1,3 @@
-var abi = '[{"constant":false,"inputs":[{"name":"_vendor1","type":"address"},{"name":"_vendor2","type":"address"}],"name":"splitRevenue","outputs":[],"payable":true,"type":"function"},{"constant":false,"inputs":[],"name":"revToContract","outputs":[],"payable":true,"type":"function"},{"inputs":[],"payable":false,"type":"constructor"}]';
-var address = '0x7e8e13d30d3bb3a8d1488bb8926b12cd22071eba';
+var abi = '[{"constant":false,"inputs":[],"name":"getbalance","outputs":[{"name":"balance","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_vendor1","type":"address"},{"name":"_vendor2","type":"address"}],"name":"splitRevenue","outputs":[],"payable":true,"type":"function"},{"constant":false,"inputs":[],"name":"revToContract","outputs":[],"payable":true,"type":"function"},{"inputs":[],"payable":false,"type":"constructor"}]';
+var address = '0xe3cb2a43e7bf709395bb6dd45fe6b513cf4c26db';
 module.exports = {abi: abi, address: address};

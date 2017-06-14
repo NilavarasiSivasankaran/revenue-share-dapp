@@ -5,6 +5,10 @@ contract RevenueShareContract {
     address vendor1 ;//= 0xA774D5eE6294ab782c1d099F5D5ed7666B3E1767; 
     address vendor2 ;//= 0xEb3d454BC0d25A5f7955C2FFe1cD398A2cD159eF; 
     
+    function getbalance() returns (uint balance){
+     balance=this.balance;
+    }
+
     function RevenueShareContract() {
     
     }
@@ -14,7 +18,7 @@ contract RevenueShareContract {
     function revToContract() payable {
             
     }
-    
+
     function splitRevenue(address _vendor1,address _vendor2) payable {
         vendor1=_vendor1;
         vendor2=_vendor2;
