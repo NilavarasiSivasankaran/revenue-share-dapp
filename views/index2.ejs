@@ -1,25 +1,162 @@
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" dir="ltr">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
- 
-  <meta http-equiv="X-UA-Compatible" content="chrome=1">
-  <meta name="google" value="notranslate">
- 
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
-<title> Balance Checking </title>
-</head>
+  <title>Revenue Share Contract</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+ <style>
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+</style>
+  </head>
 <body>
-					<button id="button" class="btn btn-primary btn-lg"> Current Contract Balance </button>
-					<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-					<script>
-					$(document).ready(function(){
-						$("#button").click(function(){
-							 $.get("http://139.59.5.117:3000/getBalance/", function(data, status){
-							            alert("Data: " + data + "\nStatus: " + status);
-							        });
-													});
-							        });
-					 </script>
+<div class="jumbotron text-center">
+  <h1>Ethereum Transaction</h1>
+  <p>Welcome User</p> 
+</div>
+  
+<div class="container">
+  <div class="row">
+   <div class="col-sm-3">
+   </div>
+   
+    
+    <div class="col-sm-6">
+      <div id="signup">
+        <center>
+
+        <label for="inputName" class="control-label">Name</label>
+        <div class="input-group">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+        <input  name="first_name" placeholder="First Name" class="form-control" id="susername" >
+        </div></br>
+        
+        <label for="inputPassword" class="control-label">Password</label></br>
+        <div class="input-group">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+        <input data-minlength="6" class="form-control" id="spassword" placeholder="Password" required>
+        </div>
+        <div class="help-block">Minimum of 6 characters</div>
+        
+        <label for="inputEmail" class="control-label">Email</label>
+        <div class="input-group">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+        <input type="email" class="form-control" id="email" placeholder="Email" data-error="Bruh, that email address is invalid" required>
+        </div>
+        <div class="help-block with-errors"></div></br>
+        
+        <button id="sbutton" class="btn btn-primary btn-lg" > SignUp 
+        <span class="glyphicon glyphicon-send"></span>
+        </button></br></br>
+        
+        <div id="slogin">
+        <button id="logbut" type="button" class="btn btn-link" >Already have an account</button>
+        </div>
+        
+        </center>
+      </div>
+
+      <div id="login">
+        <center>
+        
+        <label for="inputName" class="control-label">Name</label>
+        <div class="input-group">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+        <input  name="first_name" placeholder="First Name" class="form-control" id="lusername" >
+        </div></br>
+        
+        <label for="inputPassword" class="control-label">Password</label></br>
+        <div class="input-group">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+        <input class="form-control" id="lpassword" placeholder="Password" required>
+        </div></br>
+        
+        <button id="lbutton" class="btn btn-primary btn-lg" > login 
+        <span class="glyphicon glyphicon-send"></span>
+        </button>
+        
+        </center>
+      </div>
+
+      <div id="wait">
+        <center>
+          <div class="loader" id="loading"></div>
+        </center>
+      </div>
+
+    </div>
+  </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+
+
+$(document).ready(function(){
+    $("#wait").hide();
+    $("#login").hide();
+      
+
+      $("#sbutton").click(function(){
+        $("#wait").show();
+        $("#signup").hide();
+        var username=document.getElementById("susername").value;
+        var password=document.getElementById("spassword").value;
+        var email=document.getElementById("email").value;
+        $.post("http://139.59.5.117:3000/userDetails",{ 
+          "username":username,
+          "email":email,
+          "password":password 
+        } , function(data, status){
+            $("#wait").hide();
+            $("#login").show();
+          });
+        });
+      
+      $("#lbutton").click(function(){
+        $("#wait").show();
+        $("#signup").hide();
+        var username=document.getElementById("lusername").value;
+        console.log(username);
+        var password=document.getElementById("lpassword").value;
+        $.post("http://139.59.5.117:3000/loginDetails",{ 
+          "username":username,
+          "password":password 
+        } , function(data, status){
+            $("#wait").hide();
+            if(status=="success"){
+            location.href="http://139.59.5.117:3000/index";  
+            }
+            
+          });
+           
+        });
+      $("#logbut").click(function(){
+        $("#signup").hide();
+        $("#slogin").hide();
+        $("#login").show();
+        });
+  
+      });
+</script>
 </body>
 </html>

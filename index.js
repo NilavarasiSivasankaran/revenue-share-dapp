@@ -1,7 +1,14 @@
 const express = require('express')
-const router = require('./router')
-const interact = require ('./interact')
+const router = require('./routes/router')
+var bodyParser = require('body-parser')
+
 const app = express()
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded())
+
+// parse application/json
+app.use(bodyParser.json())
 
 app.use("/",router);
 

@@ -33,7 +33,12 @@
 <div class="jumbotron text-center">
   <h1>Ethereum Transaction</h1>
   <p>Welcome User</p> 
+<div id="slogin" class="text-right">
+  <button id="logout" type="button" class="btn btn-link" >Logout
+  </button>
+  </div>
 </div>
+
   
 <div class="container">
   <div class="row">
@@ -96,6 +101,10 @@ $(document).ready(function(){
           });
            
     });
+      $("#logout").click(function(){
+       location.href="http://139.59.5.117:3000/";
+  
+      });
   
   });
 

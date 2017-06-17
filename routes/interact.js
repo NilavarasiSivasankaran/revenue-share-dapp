@@ -1,7 +1,7 @@
 var Promise = require('bluebird');
 var config = require('./config.js');
 
-var RevenueShareContract = require('./abi/RevenueShareContract.js');
+var RevenueShareContract = require('../abi/RevenueShareContract.js');
 let abi = JSON.parse(RevenueShareContract.abi);
 
 var web3, provider;
