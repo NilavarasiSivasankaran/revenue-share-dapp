@@ -1,11 +1,10 @@
 var Promise = require('bluebird');
 var config = require('./config.js');
-
 var RevenueShareContract = require('../abi/RevenueShareContract.js');
 let abi = JSON.parse(RevenueShareContract.abi);
-
 var web3, provider;
 var getMnemonic = config.getMnemonic;
+var getBalance=config.getBalance;
 
 function getTxReceipt(hash) {
     var getReceipt = Promise.promisify(web3.eth.getTransactionReceipt);
@@ -26,9 +25,11 @@ function getTxReceipt(hash) {
         }, 3000);
     });
 }
+
+
+
 function revToContract1(vendor1,vendor2,mnemonic){
     var splitRevenue, revToContract, RevenueShareContractObj;
-    
     return Promise.resolve(getMnemonic(mnemonic))
         .then((providers)=>{
             web3 = providers.web3;
@@ -40,16 +41,23 @@ function revToContract1(vendor1,vendor2,mnemonic){
         }).then((hash) => getTxReceipt(hash))
         .then(()=>{
             console.log("Amount has been successfully transfered to the contract")
+            
             return splitRevenue(vendor1,vendor2,{from:provider.address})
         })
         .then((hash)=>getTxReceipt(hash))
         .then(()=>{
             console.log("Successfully split the amount.")
-            return true
-        }).catch((err)=>{
+            return getBalance(mnemonic)
+        }).then((balance)=>{
+            return ({res:true,balance:balance})
+        }).
+            catch((err)=>{
             console.log(err);
             return false
         })
+
 }
+
+
 
 module.exports = revToContract1;

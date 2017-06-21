@@ -31,7 +31,7 @@
   </head>
 <body>
 <div class="jumbotron text-center">
-  <h1>Ethereum Transaction</h1>
+  <h1>Revenue Share POC</h1>
   <p>Welcome User</p> 
 </div>
   
@@ -44,26 +44,34 @@
     <div class="col-sm-6">
       <div id="signup">
         <center>
-
+        <form id="myform">
         <label for="inputName" class="control-label">Name</label>
         <div class="input-group">
         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-        <input  name="first_name" placeholder="First Name" class="form-control" id="susername" >
+        <input  name="first_name" minlength="6" placeholder="User Name" class="form-control" id="susername">
         </div></br>
         
+
+
+         <label for="inputEmail" class="control-label">Email</label>
+        <div class="input-group">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+        <input type="email" pattern="[^ @]*@[^ @]*" class="form-control" id="email" placeholder="Email"required>
+        </div>
+        </br>
+
+
+
+
+
         <label for="inputPassword" class="control-label">Password</label></br>
         <div class="input-group">
         <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
-        <input data-minlength="6" class="form-control" id="spassword" placeholder="Password" required>
+        <input type="password" minlength="6" class="form-control" id="spassword" placeholder="Password">
         </div>
         <div class="help-block">Minimum of 6 characters</div>
         
-        <label for="inputEmail" class="control-label">Email</label>
-        <div class="input-group">
-        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-        <input type="email" class="form-control" id="email" placeholder="Email" data-error="Bruh, that email address is invalid" required>
-        </div>
-        <div class="help-block with-errors"></div></br>
+       
         
         <button id="sbutton" class="btn btn-primary btn-lg" > SignUp 
         <span class="glyphicon glyphicon-send"></span>
@@ -72,23 +80,23 @@
         <div id="slogin">
         <button id="logbut" type="button" class="btn btn-link" >Already have an account</button>
         </div>
-        
+        </form>
         </center>
       </div>
 
       <div id="login">
         <center>
         
-        <label for="inputName" class="control-label">Name</label>
+        <label for="inputName" class="control-label">Email</label>
         <div class="input-group">
         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-        <input  name="first_name" placeholder="First Name" class="form-control" id="lusername" >
+        <input  name="email" placeholder="email" class="form-control" id="lemail" >
         </div></br>
         
         <label for="inputPassword" class="control-label">Password</label></br>
         <div class="input-group">
         <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
-        <input class="form-control" id="lpassword" placeholder="Password" required>
+        <input type="password"  class="form-control" id="lpassword" placeholder="Password" required>
         </div></br>
         
         <button id="lbutton" class="btn btn-primary btn-lg" > login 
@@ -107,9 +115,25 @@
     </div>
   </div>
 </div>
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+<script>
+// just for the demos, avoids form submit
+jQuery.validator.setDefaults({
+  debug: true,
+  success: "valid"
+});
+$( "#myform" ).validate({
+  rules: {
+    password: {
+      required: true,
+    }
+  }
+});
+</script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
-
 
 $(document).ready(function(){
     $("#wait").hide();
@@ -120,8 +144,8 @@ $(document).ready(function(){
         $("#wait").show();
         $("#signup").hide();
         var username=document.getElementById("susername").value;
-        var password=document.getElementById("spassword").value;
         var email=document.getElementById("email").value;
+         var password=document.getElementById("spassword").value;
         $.post("http://139.59.5.117:3000/userDetails",{ 
           "username":username,
           "email":email,
@@ -135,18 +159,21 @@ $(document).ready(function(){
       $("#lbutton").click(function(){
         $("#wait").show();
         $("#signup").hide();
-        var username=document.getElementById("lusername").value;
-        console.log(username);
+        var email=document.getElementById("lemail").value;
         var password=document.getElementById("lpassword").value;
         $.post("http://139.59.5.117:3000/loginDetails",{ 
-          "username":username,
-          "password":password 
-        } , function(data, status){
+           "email":email,
+           "password":password
+        } , function(data){
             $("#wait").hide();
-            if(status=="success"){
-            location.href="http://139.59.5.117:3000/index";  
+            console.log("data",data)
+            if(data.status === 200){
+              console.log(data);
+              localStorage.setItem("mnemonic",data.data.plaintext);
+              localStorage.setItem("balance",data.data.res);
+              console.log(data.data.res);
+              location.href="http://139.59.5.117:3000/index";
             }
-            
           });
            
         });

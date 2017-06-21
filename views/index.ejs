@@ -31,8 +31,12 @@
   </head>
 <body>
 <div class="jumbotron text-center">
-  <h1>Ethereum Transaction</h1>
-  <p>Welcome User</p> 
+  <h1>Revenue Share POC</h1>
+
+  <label>Current Balance:
+  </label>
+  <p id="balance1"></p>
+ 
 <div id="slogin" class="text-right">
   <button id="logout" type="button" class="btn btn-link" >Logout
   </button>
@@ -44,13 +48,15 @@
   <div class="row">
     <div class="col-sm-4">
       <pre>
+      <ul style="list-style-type:circle">
       <strong>Instructions to be followed</strong>
       
-      <ul>Enter Vendor1 Address</ul>
-      <ul>Enter Vendor2 Address</ul>
-      <ul>Enter Client Mnemonic</ul>
-      <ul>Submit your response</ul>
-      <ul>Wait for the transaction to be mined</ul>
+      
+      <li>Enter Vendor1 Address</li>
+      <li>Enter Vendor2 Address</li>
+      <li>Submit your response</li>
+      <li>Wait for the transaction to be mined</li>
+      </ul>
      
       </pre>
     </div>
@@ -61,8 +67,6 @@
         <input type="text" name="vendor1" id="vendor1" class="form-control"/></br>
         <label class="control-label"> Vendor2 Address </label>
         <input type="text" name="Vendor2" id="vendor2" class="form-control"/></br></br>
-        <label class="control-label"> Client Mnemonic </label>
-        <input type="text" name="mnemonic" id="mnemonic" class="form-control"/></br></br>
         <button id="button" class="btn btn-primary btn-lg" > Submit </button>
         </center>
       </div>
@@ -71,11 +75,16 @@
         <center>
           <div class="loader" id="loading"></div>
         </center>
-        <h1>Waiting for the tranaction to be mined..!</h1>
+        <h1>Waiting for the transaction to be mined..!</h1>
       </div>
 
       <div id="result">
-        <h1> Your Trancaction has been successfully Completed...!</h1>
+        <h1> Your Transaction has been successfully Completed...!</h1>
+        <center>
+        <div id="slogin">
+        <button id="logbut" type="button" class="btn btn-link" ><h3>Make another transaction</h3></button>
+        </div>
+        </center>
       </div> 
     </div>
   </div>
@@ -86,18 +95,23 @@
 $(document).ready(function(){
     $("#result").hide();
     $("#wait").hide();
-    
+    var balance = localStorage.getItem("balance");
+    document.getElementById("balance1").innerHTML = balance;
       $("#button").click(function(){
         $("#div1").hide();
         $("#wait").show();;
   
         var _vendor1=document.getElementById("vendor1").value;
         var _vendor2=document.getElementById("vendor2").value;
-        var _mnemonic=document.getElementById("mnemonic").value;
+        var mnemonic = localStorage.getItem("mnemonic");
+         
+        $.get("http://139.59.5.117:3000/revTransfer/"+_vendor1+'/'+_vendor2+'/'+mnemonic, function(data){
+          console.log(data)
+          localStorage.setItem("balance",data.balance)
+          document.getElementById("balance1").innerHTML = data.balance;
+          $("#result").show();
+          $("#wait").hide();
 
-        $.get("http://139.59.5.117:3000/revTransfer/"+_vendor1+'/'+_vendor2+'/'+_mnemonic, function(data, status){
-            $("#result").show();
-            $("#wait").hide();
           });
            
     });
@@ -105,7 +119,11 @@ $(document).ready(function(){
        location.href="http://139.59.5.117:3000/";
   
       });
+            $("#logbut").click(function(){
+       location.href="http://139.59.5.117:3000/index";
   
+      });
+     
   });
 
 </script>

@@ -19,6 +19,8 @@ router.get("/index",function(req,res){
 	res.render('index')
 })
 
+
+
 router.post("/userDetails",(req,res)=>{
 	user={	"name":req.body.username,
 			"emailAddress":req.body.email,
@@ -37,17 +39,17 @@ router.post("/userDetails",(req,res)=>{
 
 
 router.post("/loginDetails",(req,res)=>{
-	user={"name":req.body.username,"password":req.body.password};
-	console.log(user);
+	user={"emailAddress":req.body.email,
+			"password":req.body.password};
 	signup.login(user)
 	  .then((result)=>{
-	  	console.log("router\n",result);
 		if(result){
-			res.send({ data:result[0]._id	,status:200 });
+			res.send({ data:result	,status:200 })
 		}
 		else
 			return "error"
-	
+	}).catch(err=>{
+		console.log(err)
 	})
 
 })
@@ -55,13 +57,14 @@ router.post("/loginDetails",(req,res)=>{
 
 
 router.get("/revTransfer/:v1/:v2/:mnemonic",(req,res)=>{
-	revToContract1(req.params.v1,req.params.v2, req.params.mnemonic)
+	revToContract1(req.params.v1,req.params.v2,req.params.mnemonic)
 	.then((result)=>{
-		if(result){
-			res.send({ data:"success",status:200 })
+		console.log(result);
+		if(result.res){
+			res.send({ balance:result.balance,status:200 })
 		}
 		else
-			return "error"
+			res.send({err:"Error"})
 	})
 })
 
